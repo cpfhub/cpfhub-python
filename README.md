@@ -1,8 +1,8 @@
 # cpfhub: Python SDK for CPFHub.io
 
-**Official Python SDK for [CPFHub.io](https://cpfhub.io) — Brazilian CPF Lookup API**
+🇺🇸 **English** | [🇧🇷 Português](#português)
 
-> Official Python SDK for CPFHub.io. Retrieve identity data from a Brazilian CPF number.
+**Official Python SDK for [CPFHub.io](https://cpfhub.io) — Brazilian CPF Lookup API**
 
 [![PyPI version](https://img.shields.io/pypi/v/cpfhub)](https://pypi.org/project/cpfhub/)
 [![Python](https://img.shields.io/pypi/pyversions/cpfhub)](https://pypi.org/project/cpfhub/)
@@ -15,25 +15,6 @@
 CPFHub.io is a REST API that returns name, gender, and date of birth from any Brazilian CPF number — in ~300ms, with 99.9% uptime, and full LGPD compliance.
 
 **10M+ CPFs queried · 1,300+ active companies · 99.9% uptime**
-
----
-
-## Why use the CPFHub.io Python SDK?
-
-This SDK is designed to offer a fluid and efficient integration of the CPFHub.io API into Python projects, focusing on Developer Experience (DX) and compatibility with AI Agents.
-
-### 1. Optimized Developer Experience (DX)
-
-*   **Fast Integration**: Easily incorporate CPF lookups into your Python scripts and applications.
-*   **API Abstraction**: Automatically handles headers, JSON parsing, and error handling, allowing you to focus on business logic.
-
-### 2. Native Compatibility with AI Agents
-
-To facilitate integration with AI agents and LLMs, this SDK and the CPFHub.io API offer:
-
-*   **OpenAPI Specification**: The official API specification is available at [cpfhub-openapi](https://github.com/cpfhub/cpfhub-openapi), allowing agents to automatically understand its structure and typed schemas.
-*   **Tool Descriptions**: The API is easily representable as "tool descriptions" for LLMs, facilitating invocation in agent frameworks.
-*   **Native MCP Server**: CPFHub.io offers an MCP server that exposes the API directly to AI agents (Claude, Cursor, Windsurf), complementing its use in Python development environments.
 
 ---
 
@@ -60,6 +41,33 @@ print(result.birth_date) # "15/06/1990"
 ```
 
 Get your free API key at [app.cpfhub.io](https://app.cpfhub.io) — no credit card required.
+
+---
+
+## curl Example
+
+```bash
+curl -X GET "https://api.cpfhub.io/cpf/12345678909" \
+  -H "x-api-key: YOUR_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "cpf": "12345678909",
+    "name": "Fulano de Tal",
+    "nameUpper": "FULANO DE TAL",
+    "gender": "M",
+    "birthDate": "15/06/1990",
+    "day": 15,
+    "month": 6,
+    "year": 1990
+  }
+}
+```
 
 ---
 
@@ -91,7 +99,7 @@ asyncio.run(main())
 
 ### `client.lookup(cpf: str) -> CPFResult`
 
-Looks up a CPF and returns the associated data.
+Looks up a CPF and returns the associated identity data.
 
 Accepts CPF with or without formatting (`000.000.000-00` or `00000000000`).
 
@@ -136,8 +144,8 @@ except CPFHubError as e:
 
 Check the `examples/` directory for sample usage:
 
-*   [simple_lookup.py](examples/simple_lookup.py)
-*   [real_world_onboarding.py](examples/real_world_onboarding.py)
+- [simple_lookup.py](examples/simple_lookup.py)
+- [real_world_onboarding.py](examples/real_world_onboarding.py)
 
 ### requests (sync)
 
@@ -159,7 +167,7 @@ async def verify_cpf(cpf: str):
     client = AsyncCPFHub(api_key="YOUR_API_KEY")
     return await client.lookup(cpf)
 
-asyncio.run(verify_cpf("00000000000"))
+result = asyncio.run(verify_cpf("00000000000"))
 print(result.name)
 ```
 
@@ -173,7 +181,7 @@ app = FastAPI()
 client = AsyncCPFHub(api_key="YOUR_API_KEY")
 
 @app.get("/cpf/{cpf}")
-async def lookup_cpf(cpf: str):
+async def get_person_by_cpf(cpf: str):
     result = await client.lookup(cpf)
     return {"name": result.name, "gender": result.gender}
 ```
@@ -187,7 +195,7 @@ from cpfhub import CPFHub
 
 client = CPFHub(api_key="YOUR_API_KEY")
 
-def lookup_cpf(request, cpf):
+def get_person_by_cpf(request, cpf):
     result = client.lookup(cpf)
     return JsonResponse({"name": result.name, "gender": result.gender})
 ```
@@ -233,9 +241,259 @@ The SDK automatically retries on `429` with exponential backoff (up to 3 attempt
 - [Pricing](https://cpfhub.io#pricing)
 - [LGPD Compliance](https://cpfhub.io/lgpd)
 - [OpenAPI Specification](https://github.com/cpfhub/cpfhub-openapi/blob/main/openapi.yaml)
+- [MCP Server (AI Agents)](https://github.com/cpfhub/cpfhub-mcp)
 
 ---
 
 ## License
+
+MIT © [CPFHub.io](https://cpfhub.io)
+
+---
+
+# Português
+
+[🇺🇸 English](#cpfhub-python-sdk-for-cpfhubio) | 🇧🇷 **Português**
+
+**SDK Python oficial para [CPFHub.io](https://cpfhub.io) — API de Consulta de CPF Brasileiro**
+
+---
+
+## O que é o CPFHub.io?
+
+O CPFHub.io é uma API REST que retorna nome, gênero e data de nascimento de qualquer CPF brasileiro — em ~300ms, com 99,9% de uptime e total conformidade com a LGPD.
+
+**10M+ CPFs consultados · 1.300+ empresas ativas · 99,9% uptime**
+
+---
+
+## Instalação
+
+```bash
+pip install cpfhub
+```
+
+---
+
+## Início Rápido
+
+```python
+from cpfhub import CPFHub
+
+client = CPFHub(api_key="SUA_CHAVE_DE_API")
+
+result = client.lookup("00000000000")
+
+print(result.name)       # "Fulano de Tal"
+print(result.gender)     # "M"
+print(result.birth_date) # "15/06/1990"
+```
+
+Obtenha sua chave de API gratuita em [app.cpfhub.io](https://app.cpfhub.io) — sem cartão de crédito.
+
+---
+
+## Exemplo curl
+
+```bash
+curl -X GET "https://api.cpfhub.io/cpf/12345678909" \
+  -H "x-api-key: SUA_CHAVE_DE_API"
+```
+
+**Resposta:**
+
+```json
+{
+  "success": true,
+  "data": {
+    "cpf": "12345678909",
+    "name": "Fulano de Tal",
+    "nameUpper": "FULANO DE TAL",
+    "gender": "M",
+    "birthDate": "15/06/1990",
+    "day": 15,
+    "month": 6,
+    "year": 1990
+  }
+}
+```
+
+---
+
+## Suporte a Async
+
+```python
+import asyncio
+from cpfhub import AsyncCPFHub
+
+async def main():
+    client = AsyncCPFHub(api_key="SUA_CHAVE_DE_API")
+    result = await client.lookup("00000000000")
+    print(result.name)
+
+asyncio.run(main())
+```
+
+---
+
+## Referência da API
+
+### `CPFHub(api_key, timeout=10, base_url=None)`
+
+| Parâmetro | Tipo | Obrigatório | Padrão | Descrição |
+|-----------|------|-------------|--------|-----------|
+| `api_key` | `str` | Sim | — | Sua chave de API do CPFHub |
+| `timeout` | `int` | Não | `10` | Timeout da requisição em segundos |
+| `base_url` | `str` | Não | `https://api.cpfhub.io` | URL base da API |
+
+### `client.lookup(cpf: str) -> CPFResult`
+
+Consulta um CPF e retorna os dados de identidade associados.
+
+Aceita CPF com ou sem formatação (`000.000.000-00` ou `00000000000`).
+
+#### Atributos de `CPFResult`
+
+| Atributo | Tipo | Descrição |
+|----------|------|-----------|
+| `cpf` | `str` | CPF (apenas dígitos) |
+| `name` | `str` | Nome completo — `"Fulano de Tal"` |
+| `name_upper` | `str` | Nome completo em maiúsculas |
+| `gender` | `str` | `"M"` ou `"F"` |
+| `birth_date` | `str` | Data de nascimento — `"DD/MM/YYYY"` |
+| `day` | `int` | Dia de nascimento |
+| `month` | `int` | Mês de nascimento |
+| `year` | `int` | Ano de nascimento |
+
+---
+
+## Tratamento de Erros
+
+```python
+from cpfhub import CPFHub, CPFHubError
+
+client = CPFHub(api_key="SUA_CHAVE_DE_API")
+
+try:
+    result = client.lookup("00000000000")
+    print(result.name)
+except CPFHubError as e:
+    print(f"Erro {e.status_code}: {e.message}")
+    # 400 — Formato de CPF inválido
+    # 401 — Chave de API inválida ou ausente
+    # 404 — CPF não encontrado
+    # 429 — Limite de requisições excedido
+    # 500 — Erro no servidor
+    # 503 — Serviço temporariamente indisponível
+```
+
+---
+
+## Exemplos
+
+Veja o diretório `examples/` para exemplos de uso:
+
+- [simple_lookup.py](examples/simple_lookup.py)
+- [real_world_onboarding.py](examples/real_world_onboarding.py)
+
+### requests (síncrono)
+
+```python
+from cpfhub import CPFHub
+
+client = CPFHub(api_key="SUA_CHAVE_DE_API", timeout=5)
+result = client.lookup("00000000000")
+print(result.name)
+```
+
+### httpx (assíncrono)
+
+```python
+import asyncio
+from cpfhub import AsyncCPFHub
+
+async def verify_cpf(cpf: str):
+    client = AsyncCPFHub(api_key="SUA_CHAVE_DE_API")
+    return await client.lookup(cpf)
+
+result = asyncio.run(verify_cpf("00000000000"))
+print(result.name)
+```
+
+### FastAPI
+
+```python
+from fastapi import FastAPI
+from cpfhub import AsyncCPFHub
+
+app = FastAPI()
+client = AsyncCPFHub(api_key="SUA_CHAVE_DE_API")
+
+@app.get("/cpf/{cpf}")
+async def get_person_by_cpf(cpf: str):
+    result = await client.lookup(cpf)
+    return {"name": result.name, "gender": result.gender}
+```
+
+### Django
+
+```python
+# views.py
+from django.http import JsonResponse
+from cpfhub import CPFHub
+
+client = CPFHub(api_key="SUA_CHAVE_DE_API")
+
+def get_person_by_cpf(request, cpf):
+    result = client.lookup(cpf)
+    return JsonResponse({"name": result.name, "gender": result.gender})
+```
+
+---
+
+## Limites de Requisição
+
+| Plano | Limite |
+|---|---|
+| Gratuito | 1 requisição a cada 2 segundos · 50 requisições/mês |
+| Pro | 1 requisição por segundo · 1.000 requisições/mês |
+| Corporativo | Personalizado |
+
+O SDK faz retry automático no erro `429` com backoff exponencial (até 3 tentativas).
+
+---
+
+## Planos e Preços
+
+| Plano | Preço | Incluído | Extra |
+|-------|-------|----------|-------|
+| **Gratuito** | R$ 0/mês | 50 consultas | — |
+| **Pro** | R$ 149/mês | 1.000 consultas | R$ 0,15/consulta |
+| **Corporativo** | Personalizado | Personalizado | Personalizado |
+
+[Ver preços completos em cpfhub.io →](https://cpfhub.io#pricing)
+
+---
+
+## Requisitos
+
+- Python 3.8+
+- `requests` (síncrono) ou `httpx` (assíncrono) — instalados automaticamente
+
+---
+
+## Links
+
+- [Documentação](https://cpfhub.io/documentacao)
+- [Dashboard](https://app.cpfhub.io)
+- [Página de Status](https://app.cpfhub.io/status)
+- [Preços](https://cpfhub.io#pricing)
+- [Conformidade LGPD](https://cpfhub.io/lgpd)
+- [Especificação OpenAPI](https://github.com/cpfhub/cpfhub-openapi/blob/main/openapi.yaml)
+- [Servidor MCP (Agentes de IA)](https://github.com/cpfhub/cpfhub-mcp)
+
+---
+
+## Licença
 
 MIT © [CPFHub.io](https://cpfhub.io)

@@ -20,9 +20,7 @@ keywords = [
     "cpf-api",
     "cpf-lookup",
     "cpf-validation",
-    "cpf-consulta",
     "cpfhub",
-    "brasil",
     "brazil",
     "receita-federal",
     "sdk",
@@ -31,8 +29,7 @@ keywords = [
     "kyc",
     "identity-verification",
     "onboarding",
-    "lgpd",
-    "validacao-cpf"
+    "lgpd"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
