@@ -14,8 +14,6 @@
 
 CPFHub.io é uma API REST que retorna nome, gênero e data de nascimento a partir de qualquer CPF brasileiro — em ~300ms, com 99.9% de uptime, e total conformidade com a LGPD.
 
-> CPFHub.io é uma API REST que retorna nome, gênero e data de nascimento a partir de qualquer CPF brasileiro — em ~300ms, com 99,9% de uptime e total conformidade com a LGPD.
-
 **10M+ CPFs consultados · 1.300+ empresas ativas · 99.9% uptime**
 
 ---
@@ -33,7 +31,7 @@ Este SDK foi projetado para oferecer uma integração fluida e eficiente da API 
 
 Para facilitar a integração com agentes de IA e LLMs, este SDK e a API do CPFHub.io oferecem:
 
-*   **OpenAPI Specification**: Um arquivo `openapi.yaml` está disponível para descrever a API, permitindo que agentes entendam automaticamente sua estrutura e schemas tipados.
+*   **OpenAPI Specification**: A especificação oficial da API está disponível no repositório [cpfhub-openapi](https://github.com/cpfhub/cpfhub-openapi), permitindo que agentes entendam automaticamente sua estrutura e schemas tipados.
 *   **Tool Descriptions**: A API é facilmente representável como "tool descriptions" para LLMs, facilitando a invocação em frameworks de agentes.
 *   **MCP Server Nativo**: O CPFHub.io oferece um servidor MCP que expõe a API diretamente para agentes de IA (Claude, Cursor, Windsurf), complementando o uso em ambientes de desenvolvimento Python.
 
@@ -233,7 +231,7 @@ The SDK automatically retries on `429` with exponential backoff (up to 3 attempt
 - [Status Page](https://app.cpfhub.io/status)
 - [Pricing / Preços](https://cpfhub.io#pricing)
 - [LGPD Compliance](https://cpfhub.io/lgpd)
-- [OpenAPI Specification](openapi.yaml)
+- [OpenAPI Specification](https://github.com/cpfhub/cpfhub-openapi/blob/main/openapi.yaml)
 
 ---
 
